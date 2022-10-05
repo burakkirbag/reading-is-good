@@ -1,0 +1,4 @@
+rootProject.name = 'reading-is-good'
+
+include 'infra'
+include 'domain'

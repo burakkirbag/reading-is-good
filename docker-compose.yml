@@ -1,0 +1,30 @@
+version: '3.6'
+
+services:
+
+  reading-is-good-mongo:
+    image: mongo
+    container_name: readingisgood_mongo
+    ports:
+      - 27017:27017
+
+  reading-is-good-api:
+    image: reading-is-good-api:latest
+    container_name: readingisgood_api
+    ports:
+      - 8080:8080
+    depends_on:
+      - reading-is-good-mongo
+    environment:
+      - SPRING_DATA_MONGODB_HOST=reading-is-good-mongo
+      - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_DATA_MONGODB_DATABASE=reading-is-good
+    restart: on-failure
+
+volumes:
+  mongo:
+    name: readingisgood_mongo_data
+
+networks:
+  default:
+    name: readingisgood_network
